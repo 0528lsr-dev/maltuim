@@ -56,12 +56,24 @@
     var info = { site: SITE, kind: 'visit', title: title, path: path, ref: source(), dev: device(), geo: '' };
     set('ref', info.ref);
     var done = false;
-    var go = function (geo) { if (done) return; done = true; info.geo = geo || ''; set('geo', info.geo); post(info); };
-    setTimeout(function () { go(''); }, 2500);
-    try { fetch('https://ipapi.co/json/').then(function (r) { return r.json(); }).then(function (d) { if (d && SKIP.indexOf(d.ip) >= 0) { done = true; try { ls.setItem('novisit', '1'); } catch (e) {} return; } go(region(d)); }, function () { go(''); }); } catch (e) { go(''); }
+    var go = function (geo) {
+      if (done) return; done = true;
+      /* 위치를 못 얻었는데 브라우저 언어가 한국어가 아니면(검색 로봇은 보통 en-US) 보내지 않는다 — 2026-11-05 */
+      if (!geo && !/^ko/i.test(navigator.language || '')) { set('bot', '1'); return; }
+      info.geo = geo || ''; set('geo', info.geo); post(info);
+    };
+    /* 2026-11-05: 구글·아마존 같은 서버 회사(검색 로봇이 브라우저처럼 들어옴, 예: 미국 Mountain View) 는 알림 안 보냄 */
+    var DC = /google|amazon|aws|microsoft|azure|digitalocean|linode|akamai|ovh|hetzner|cloudflare|oracle|alibaba|tencent|facebook|meta platforms|apple|yandex|baidu|naver cloud|kakao enterprise/i;
+    setTimeout(function () { go(''); }, 6000);
+    try { fetch('https://ipapi.co/json/').then(function (r) { return r.json(); }).then(function (d) {
+      if (d && SKIP.indexOf(d.ip) >= 0) { done = true; try { ls.setItem('novisit', '1'); } catch (e) {} return; }
+      if (d && DC.test((d.org || '') + ' ' + (d.asn_org || ''))) { done = true; set('bot', '1'); return; }
+      /* 2026-11-08: 해외 IP 인데 브라우저 언어도 한국어가 아니면 로봇으로 보고 알림 안 보냄 (해외의 한국 손님은 보통 ko 설정이라 그대로 알림) */
+      if (d && d.country_code && d.country_code !== 'KR' && !/^ko/i.test(navigator.language || '')) { done = true; set('bot', '1'); return; }
+      go(region(d)); }, function () { go(''); }); } catch (e) { go(''); }
   }
   function hot() {
-    if (get('hot')) return;
+    if (get('hot') || get('bot')) return;
     try { if (ls.getItem && ls.getItem('novisit')) return; } catch (e) {}
     var sec = Math.round((Date.now() - +(get('start') || Date.now())) / 1000), pages = +(get('pages') || 1);
     if (sec < 60 && pages < 3) return;
