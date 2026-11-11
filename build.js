@@ -159,6 +159,7 @@ function sitemap(posts) {
   const urls = [
     { loc: `${SITE}/`, lastmod: today },
     { loc: `${SITE}/blog/`, lastmod: today },
+    { loc: `${SITE}/parents.html`, lastmod: today },
     ...posts.map(p => ({ loc: `${SITE}/blog/${p.slug}.html`, lastmod: p.date }))
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
