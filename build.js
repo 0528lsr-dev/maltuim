@@ -57,6 +57,7 @@ const head = ({ title, description, url, type, extra = '' }) => `<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/blog/blog.css">
+<link rel="alternate" type="application/rss+xml" title="${BRAND} 영어공부" href="${SITE}/rss.xml">
 ${extra}</head>
 <body>
 <header>
@@ -173,6 +174,40 @@ ${urls.map(u => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</la
 `;
 }
 
+// RSS — 네이버 서치어드바이저 "RSS 제출"용. 새 글이 생기면 네이버가 이 파일을 보고 빨리 가져간다 (2026-11-13)
+function rss(posts) {
+  const day = d => new Date(d + 'T10:00:00+09:00').toUTCString();
+  const pages = [
+    { title: `${BRAND} | 영어·중국어·일본어 1:1 전화·화상 회화`, link: `${SITE}/`, description: '하루 10분부터 원어민과 1:1로 말이 트이는 전화영어·화상영어. 성인·주니어·비즈니스·시니어·주재원 가족·시험 대비, 무료 레벨테스트.', date: '2026-11-06' },
+    { title: `중국어회화 1:1 | 성인 전화·화상 중국어 - ${BRAND}`, link: `${SITE}/chinese.html`, description: '비즈니스·여행·현지 생활·HSK까지, 1:1 전화·화상으로 하루 10분부터 말하는 중국어.', date: '2026-11-12' },
+    { title: `일본어회화 1:1 | 성인 전화·화상 일본어 - ${BRAND}`, link: `${SITE}/japanese.html`, description: '업무 메일·경어, 여행, 현지 생활, JLPT까지, 1:1 전화·화상으로 하루 10분부터 말하는 일본어.', date: '2026-11-12' },
+    { title: `국제학교 학부모 영어 - ${BRAND}`, link: `${SITE}/parents.html`, description: '학부모 상담·학교 이메일·입학 인터뷰를 1:1 영어회화로 준비해요.', date: '2026-11-12' },
+  ];
+  const items = [
+    ...posts.map(p => ({ title: p.title, link: `${SITE}/blog/${p.slug}.html`, description: p.description, date: p.date })),
+    ...pages,
+  ];
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>${esc(BRAND)} 영어공부</title>
+  <link>${SITE}/</link>
+  <description>1:1 전화영어·화상영어, 중국어·일본어 회화 공부법과 표현 모음</description>
+  <language>ko</language>
+  <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml"/>
+  <lastBuildDate>${day(posts.length ? posts[0].date : '2026-11-06')}</lastBuildDate>
+${items.map(i => `  <item>
+    <title>${esc(i.title)}</title>
+    <link>${i.link}</link>
+    <guid isPermaLink="true">${i.link}</guid>
+    <description>${esc(i.description)}</description>
+    <pubDate>${day(i.date)}</pubDate>
+  </item>`).join('\n')}
+</channel>
+</rss>
+`;
+}
+
 const posts = fs.readdirSync(SRC).filter(f => f.endsWith('.html')).map(readPost)
   .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
@@ -182,4 +217,5 @@ posts.forEach(p => {
 });
 fs.writeFileSync(path.join(OUT, 'index.html'), listPage(posts));
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap(posts));
-console.log(`글 ${posts.length}편 → blog/, sitemap.xml 완료`);
+fs.writeFileSync(path.join(ROOT, 'rss.xml'), rss(posts));
+console.log(`글 ${posts.length}편 → blog/, sitemap.xml, rss.xml 완료`);

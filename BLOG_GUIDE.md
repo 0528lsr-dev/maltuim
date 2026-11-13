@@ -50,7 +50,7 @@
    - 영어 예문은 `<div class="ex"><p class="en">영어</p><p class="ko">뜻</p></div>`
    - 비교는 `<div class="table-scroll"><table>…</table></div>`
    - 마지막 문단에서 말트임 1:1 회화 수업(무료 레벨테스트, 1:1 전화·화상, 이중언어 강사, 녹음 피드백 등)과 자연스럽게 연결한다. 신청 버튼 상자는 도구가 자동으로 붙이므로 본문에 넣지 않는다.
-5. `node build.js` 를 실행한다. 글 페이지, 글 목록(`blog/index.html`), `sitemap.xml` 이 다시 만들어진다.
+5. `node build.js` 를 실행한다. 글 페이지, 글 목록(`blog/index.html`), `sitemap.xml`, `rss.xml` 이 다시 만들어진다.
 6. 바뀐 파일을 모두 커밋하고 main 에 push 한다. 커밋 메시지: `영어공부 글: <제목>`
 
 ## 글 규칙
