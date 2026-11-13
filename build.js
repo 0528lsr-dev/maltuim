@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE = 'https://seochoedu.co.kr';
-const BRAND = '말트임 영어회화';
+const BRAND = '말트임 1:1 회화';
 const PHONE = '010-5577-3067';
 const ROOT = __dirname;
 const SRC = path.join(ROOT, 'blog', '_posts');
@@ -61,11 +61,13 @@ ${extra}</head>
 <body>
 <header>
   <div class="wrap">
-    <a href="/" class="logo">말트임 <em>영어회화</em></a>
+    <a href="/" class="logo">말트임 <em>1:1 회화</em></a>
     <nav>
       <a href="/" class="hide-m">홈</a>
       <a href="/#services" class="hide-m">프로그램</a>
-      <a href="/blog/">영어공부</a>
+      <a href="/chinese.html" class="hide-m">중국어</a>
+      <a href="/japanese.html" class="hide-m">일본어</a>
+      <a href="/blog/">회화공부</a>
       <a href="/#apply" class="btn">상담신청</a>
     </nav>
   </div>
@@ -106,7 +108,7 @@ function postPage(p, others) {
     extra: `<script type="application/ld+json">${JSON.stringify(ld)}</script>\n`
   }) + `
 <main class="wrap narrow">
-  <div class="crumb"><a href="/">홈</a> › <a href="/blog/">영어공부</a></div>
+  <div class="crumb"><a href="/">홈</a> › <a href="/blog/">회화공부</a></div>
   <article>
     <span class="tag">${esc(p.tag)}</span>
     <h1>${esc(p.title)}</h1>
@@ -131,13 +133,13 @@ ${others.map(o => `      <li><a href="/blog/${o.slug}.html">${esc(o.title)}</a><
 
 function listPage(posts) {
   return head({
-    title: `영어공부 — 영어회화·전화영어·시험 대비 공부법 | ${BRAND}`,
-    description: '영어회화 공부법, 전화영어·화상영어 고르는 법, OPIc·토익스피킹 대비, 비즈니스·여행 영어 표현까지. 말트임 영어회화가 정리한 영어 공부 글 모음.',
+    title: `회화공부 — 영어·중국어·일본어 회화와 시험 대비 공부법 | ${BRAND}`,
+    description: '영어회화 공부법, 전화영어·화상영어 고르는 법, OPIc·토익스피킹 대비, 비즈니스·여행 영어 표현까지. 말트임 1:1 회화가 정리한 영어 공부 글 모음.',
     url: `${SITE}/blog/`, type: 'website'
   }) + `
 <section class="blog-hero">
   <div class="wrap">
-    <h1>영어공부</h1>
+    <h1>회화공부</h1>
     <p>말이 트이는 영어를 위한 공부법과 바로 쓰는 표현을 정리했어요.</p>
   </div>
 </section>
@@ -160,6 +162,8 @@ function sitemap(posts) {
     { loc: `${SITE}/`, lastmod: today },
     { loc: `${SITE}/blog/`, lastmod: today },
     { loc: `${SITE}/parents.html`, lastmod: today },
+    { loc: `${SITE}/chinese.html`, lastmod: today },
+    { loc: `${SITE}/japanese.html`, lastmod: today },
     ...posts.map(p => ({ loc: `${SITE}/blog/${p.slug}.html`, lastmod: p.date }))
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
