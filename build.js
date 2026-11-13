@@ -79,7 +79,7 @@ const foot = `
   <div class="wrap">
     <div class="logo">${BRAND}</div>
     <p>1:1 전화영어·화상영어 · 성인 · 주니어 · 비즈니스 · 시니어 영어회화</p>
-    <p>상담 ${PHONE} · 상담 신청은 언제든 가능해요</p>
+    <p>상담 ${PHONE}</p>
     <p style="margin-top:14px">ⓒ ${BRAND} All Rights Reserved.</p>
   </div>
 </footer>
