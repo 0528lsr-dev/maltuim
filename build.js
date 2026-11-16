@@ -163,6 +163,8 @@ function sitemap(posts) {
     { loc: `${SITE}/`, lastmod: today },
     { loc: `${SITE}/blog/`, lastmod: today },
     { loc: `${SITE}/parents.html`, lastmod: today },
+    { loc: `${SITE}/choose.html`, lastmod: today },
+    { loc: `${SITE}/faq.html`, lastmod: today },
     { loc: `${SITE}/chinese.html`, lastmod: today },
     { loc: `${SITE}/japanese.html`, lastmod: today },
     ...posts.map(p => ({ loc: `${SITE}/blog/${p.slug}.html`, lastmod: p.date }))
