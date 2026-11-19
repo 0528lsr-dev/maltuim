@@ -21,6 +21,8 @@ const PHONE = '010-5577-3067';
 const ROOT = __dirname;
 const SRC = path.join(ROOT, 'blog', '_posts');
 const OUT = path.join(ROOT, 'blog');
+// 과정별 페이지(course/*.html)도 같이 만든다 — pages.js (2026-11-19)
+const COURSES = require('./pages.js').courses;
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const korDate = d => { const [y, m, day] = d.split('-'); return `${y}년 ${+m}월 ${+day}일`; };
@@ -167,6 +169,8 @@ function sitemap(posts) {
     { loc: `${SITE}/faq.html`, lastmod: today },
     { loc: `${SITE}/chinese.html`, lastmod: today },
     { loc: `${SITE}/japanese.html`, lastmod: today },
+    { loc: `${SITE}/course/`, lastmod: today },
+    ...COURSES.map(c => ({ loc: `${SITE}/course/${c.slug}.html`, lastmod: today })),
     ...posts.map(p => ({ loc: `${SITE}/blog/${p.slug}.html`, lastmod: p.date }))
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -188,6 +192,7 @@ function rss(posts) {
   const items = [
     ...posts.map(p => ({ title: p.title, link: `${SITE}/blog/${p.slug}.html`, description: p.description, date: p.date })),
     ...pages,
+    ...COURSES.map(c => ({ title: c.title, link: `${SITE}/course/${c.slug}.html`, description: c.desc, date: '2026-11-19' })),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
