@@ -433,6 +433,7 @@ const head = ({ title, desc, kw, url, img, ld }) => `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>${esc(title)} - ${BRAND}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="keywords" content="${esc(kw)}">
