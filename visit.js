@@ -92,6 +92,19 @@
     post({ site: SITE, kind: 'hot', title: title, path: path, ref: get('ref') || source(), dev: device(), geo: get('geo') || '',
       dur: Math.floor(sec / 60) + '분 ' + (sec % 60) + '초', pages: String(pages) }, true);
   }
+  /* 2026-11-23: 문자·전화 버튼을 누르면 바로 텔레그램 알림 (Apps Script 는 그대로 — 'hot' 형식에 제목만 바꿔 보냄) */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest('a[href^="sms:"], a[href^="tel:"]') : null;
+    if (!a || get('bot')) return;
+    try { if (ls.getItem && ls.getItem('novisit')) return; } catch (e) {}
+    var sms = /^sms:/.test(a.getAttribute('href')), k = sms ? 'sms' : 'tel', now = Date.now();
+    if (now - +(get('click_' + k) || 0) < 30000) return;
+    set('click_' + k, String(now));
+    var sec = Math.round((now - +(get('start') || now)) / 1000);
+    post({ site: SITE, kind: 'hot', title: sms ? '💬 문자 보내기 버튼 누름' : '📞 전화 버튼 누름 (' + title + ')', path: path,
+      ref: get('ref') || source(), dev: device(), geo: get('geo') || '',
+      dur: Math.floor(sec / 60) + '분 ' + (sec % 60) + '초', pages: get('pages') || '1' }, true);
+  }, true);
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') hot(); });
   window.addEventListener('pagehide', hot);
   setTimeout(hot, 180000);
