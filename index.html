@@ -54,6 +54,17 @@
   .logo { font-size: 22px; font-weight: 900; } .logo em { color: var(--main); font-style: normal; }
   nav { display: flex; gap: 18px; font-weight: 500; font-size: 15px; }
   nav a:hover { color: var(--main); }
+  .langs { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+  .langs b { color: #fff; font-size: 15px; margin-right: 4px; }
+  .lg { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 999px; font-weight: 800; font-size: 15px; box-shadow: 0 4px 14px rgba(0,0,0,.18); transition: transform .15s, box-shadow .15s; }
+  .lg i { font-style: normal; transition: transform .15s; }
+  .lg:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+  .lg:hover i { transform: translateX(3px); }
+  .lg.zh { background: #e03131; color: #fff; }
+  .lg.ja { background: #fff; color: #c92a2a; }
+  .lg.es { background: #ffc61a; color: #7a1d00; }
+  .lg.fr { background: #0b2a7a; color: #fff; border: 2px solid #fff; padding: 7px 16px; }
+  @media (max-width: 600px) { .langs b { width: 100%; } .lg { padding: 8px 14px; font-size: 14px; } .lg.fr { padding: 6px 12px; } }
   nav { align-items: center; }
   .dd { position: relative; }
   .dd-btn { background: none; border: 0; font: inherit; color: inherit; cursor: pointer; padding: 0; }
@@ -228,10 +239,13 @@
       <span>✓ 결제 강요 없음</span>
       <span>✓ 강사 교체 가능</span>
       <span>✓ 성인 · 주니어 · 비즈니스 · 시니어</span>
-      <a href="chinese.html" style="color:inherit"><span>🇨🇳 중국어회화</span></a>
-      <a href="japanese.html" style="color:inherit"><span>🇯🇵 일본어회화</span></a>
-      <a href="course/spanish.html" style="color:inherit"><span>🇪🇸 스페인어회화</span></a>
-      <a href="course/french.html" style="color:inherit"><span>🇫🇷 프랑스어회화</span></a>
+    </div>
+    <div class="langs">
+      <b>외국어도 1:1로</b>
+      <a href="chinese.html" class="lg zh">🇨🇳 중국어 <i>→</i></a>
+      <a href="japanese.html" class="lg ja">🇯🇵 일본어 <i>→</i></a>
+      <a href="course/spanish.html" class="lg es">🇪🇸 스페인어 <i>→</i></a>
+      <a href="course/french.html" class="lg fr">🇫🇷 프랑스어 <i>→</i></a>
     </div>
   </div>
 </section>
