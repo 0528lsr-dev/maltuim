@@ -185,7 +185,7 @@ ${urls.map(u => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</la
 function rss(posts) {
   const day = d => new Date(d + 'T10:00:00+09:00').toUTCString();
   const pages = [
-    { title: `${BRAND} | 영어·중국어·일본어 1:1 전화·화상 회화`, link: `${SITE}/`, description: '하루 10분부터 원어민과 1:1로 말이 트이는 전화영어·화상영어. 성인·주니어·비즈니스·시니어·주재원 가족·시험 대비, 무료 레벨테스트.', date: '2026-11-06' },
+    { title: `${BRAND} | 영어·중국어·일본어 1:1 전화·화상 회화`, link: `${SITE}/`, description: '하루 10분부터 전문 선생님과 1:1로 말이 트이는 전화영어·화상영어. 성인·주니어·비즈니스·시니어·주재원 가족·시험 대비, 무료 레벨테스트.', date: '2026-11-06' },
     { title: `중국어회화 1:1 | 성인 전화·화상 중국어 - ${BRAND}`, link: `${SITE}/chinese.html`, description: '비즈니스·여행·현지 생활·HSK까지, 1:1 전화·화상으로 하루 10분부터 말하는 중국어.', date: '2026-11-12' },
     { title: `일본어회화 1:1 | 성인 전화·화상 일본어 - ${BRAND}`, link: `${SITE}/japanese.html`, description: '업무 메일·경어, 여행, 현지 생활, JLPT까지, 1:1 전화·화상으로 하루 10분부터 말하는 일본어.', date: '2026-11-12' },
     { title: `국제학교 학부모 영어 - ${BRAND}`, link: `${SITE}/parents.html`, description: '학부모 상담·학교 이메일·입학 인터뷰를 1:1 영어회화로 준비해요.', date: '2026-11-12' },
